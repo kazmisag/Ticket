@@ -35,15 +35,6 @@ $(PROG): $(OBJECTS)
 $(BUILD_DIR)/%.o: $(MODULE)/%.cpp
 	$(GCC) $(CFLAGS) -c $< $(INCLUDES) -o $@
 
-# Unity object file
-#$(BUILD_DIR)/%.o: $(LIB_DIR)/$(UNITY)/%.cpp
-#	$(GCC) $(CFLAGS) -c $< -o $@
-
-#Test object file
-#$(BUILD_DIR)/%.o: $(TEST_DIR)/%.c
-#	$(GCC) $(CFLAGS) -c $< $(INCLUDES) -o $@
-
-# Phony targets
 
 # Phony targets
 all: .mkbuild $(PROG)
