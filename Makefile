@@ -2,9 +2,11 @@
 #compiler
 GCC = g++
 
-#Compilation flags
+# Compilation flags
 CFLAGS = -Wall -Wextra -Wpedantic 
 #-Werror
+
+# Folders/Directories
 LIB_DIR := lib
 MODULE := ticketing
 BUILD_DIR := build
@@ -33,13 +35,14 @@ $(PROG): $(OBJECTS)
 
 # module object file
 $(BUILD_DIR)/%.o: $(MODULE)/%.cpp
+	echo 	$(GCC) $(CFLAGS) -c $< $(INCLUDES) -o $@
 	$(GCC) $(CFLAGS) -c $< $(INCLUDES) -o $@
-
+#e.g->	$ g++ -Wall -Wextra -Wpedantic -c ./module/ticketing_onefile.cpp -o ./build/main.o
 
 # Phony targets
 all: .mkbuild $(PROG)
 
-run: all
+run:
 	@echo ""
 	@echo "*********************"
 	@echo "Printing the Tickets"
@@ -50,7 +53,15 @@ run: all
 check: .mkbuild $(PROG)
 	
 
-clean: clean_doxygen clean_ticket clean_doxygen
+clean: clean_build clean_doxygen clean_ticket clean_doxygen
+	@echo ""
+	@echo "********************************************"
+	@echo "Deleting ticket files and build directories"
+	@echo "********************************************"
+	@echo ""
+	
+	
+clean_build:
 	@rm -rf $(BUILD_DIR)
 	
 clean_doxygen:

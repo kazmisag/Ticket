@@ -14,18 +14,43 @@
 #include <iostream>
 #include <sstream>
 
+#define CANCELLED_FLIGHTS "cancelled-flights.txt"
+
 using namespace std;
+
+// Class Common
+
+class Common
+{
+private:
+    std::string datestr; /* !< The departure date */
+    std::string timestr; /* !< The departure time */
+    std::string dep;     /* !< The departure airport */
+    std::string des;     /* !< The destination airport */
+public:
+    string getDate(void) { return this->datestr; }
+    string getTime(void) { return this->timestr; }
+    string getDestination(void) { return this->des; }
+    string getDeparture(void) { return this->dep; }
+
+    void setDate(string datestr) { this->datestr = datestr; }
+    void setTime(string timestr) { this->timestr = timestr; }
+    void setDeparture(string dep) { this->dep = dep; }
+    void setDestination(string des) { this->des = des; }
+
+}; // End Class Common
+
 // Class to create a Booking of link list
 
 /**
  * @brief Booking class to handle bookings.csv data
  *
  */
-class Booking
+class Booking : public Common
 {
 private:
-    int bNumber = 0;
-    std::string datestr;   /* !< The departure date */
+    int bNumber = 0;       /* !< The booking number */
+                           // std::string datestr;   /* !< The departure date */
     std::string timestr;   /* !< The departure time */
     std::string dep;       /* !< The departure airport */
     std::string des;       /* !< The destination airport */
@@ -38,15 +63,15 @@ public:
     /**
      * @brief Construct a new Booking object
      *
-     * @param bNumber
-     * @param dateStr
-     * @param timeStr
-     * @param departure
-     * @param destination
-     * @param seatCl
-     * @param firstN
-     * @param lastN
-     * @param next
+     * @param bNumber !< The booking number
+     *@param dateStr                    !< The departure date
+     *@param timeStr             !< The departure date
+     *@param departure           !< The departure airport
+     *@param destination     !< The destination airport
+     *@param seatCl  Seat class
+     *@param firstN
+     *@param lastN
+     *@param next
      */
     Booking(int bNumber, string dateStr, string timeStr, string departure,
             string destination, string seatCl, string firstN, string lastN,
@@ -54,10 +79,14 @@ public:
     {
         // cout << "Testing Booking cl" << seatCl << endl;
         this->bNumber = bNumber;
-        this->datestr = dateStr;
-        this->timestr = timeStr;
-        this->dep = departure;
-        this->des = destination;
+        this->setDate(dateStr);
+        this->setTime(timeStr);
+        this->setDeparture(departure);
+        this->setDestination(destination);
+        //  this->datestr = dateStr;
+        // this->timestr = timeStr;
+        // this->dep = departure;
+        // this->des = destination;
         this->seatClass = seatCl;
         this->fName = firstN;
         this->lName = lastN;
@@ -96,28 +125,28 @@ public:
      *
      * @return string
      */
-    string getDate(void) { return this->datestr; }
+    //  string getDate(void) { return this->datestr; }
 
     /**
      * @brief Get the Time object
      *
      * @return string
      */
-    string getTime(void) { return this->timestr; }
+    //    string getTime(void) { return this->timestr; }
 
     /**
      * @brief Get the Departure object
      *
      * @return string
      */
-    string getDeparture(void) { return this->dep; }
+    //    string getDeparture(void) { return this->dep; }
 
     /**
      * @brief Get the Destination object
      *
      * @return string
      */
-    string getDestination(void) { return this->des; }
+    // string getDestination(void) { return this->des; }
 
     /**
      * @brief Get the Next Node object
@@ -288,6 +317,7 @@ public:
     int length(void)
     {
         int count = 0;
+
         for (Booking *currNode = this->head; currNode != nullptr;
              currNode = currNode->getNextNode())
         {
@@ -319,14 +349,14 @@ public:
  * @brief  Class to create a Flight node
  *
  */
-class Flight
+class Flight : public Common
 {
 private:
-    int fNumber = 0;     /* !< Flight number */
-    std::string dep;     /* !< The departure airport */
-    std::string des;     /* !< The destination airport */
-    std::string dateStr; /* !< The departure date */
-    std::string timeStr; /* !< The departure time */
+    int fNumber = 0; /* !< Flight number */
+                     // std::string dep;     /* !< The departure airport */
+                     // std::string des;     /* !< The destination airport */
+                     // std::string dateStr; /* !< The departure date */
+    // std::string timeStr; /* !< The departure time */
     Flight *next;
 
 public:
@@ -358,10 +388,14 @@ public:
            Flight *next = nullptr)
     {
         this->fNumber = flightN;
-        this->dep = departure;
-        this->des = destination;
-        this->dateStr = dateStr;
-        this->timeStr = timeStr;
+        this->setDeparture(departure);
+        this->setDestination(destination);
+        this->setDate(dateStr);
+        this->setTime(timeStr);
+        // this->dep = departure;
+        // this->des = destination;
+        //   this->dateStr = dateStr;
+        // this->timeStr = timeStr;
 
         this->fSeat = firstClass;
         this->fs = new int[firstClass * 7]; // create array of seats by multiplying
@@ -389,28 +423,28 @@ public:
      *
      * @return string
      */
-    string getDeparture(void) { return this->dep; }
+    // string getDeparture(void) { return this->dep; }
 
     /**
      * @brief Get the Destination object
      *
      * @return string
      */
-    string getDestination() { return this->des; }
+    // string getDestination() { return this->des; }
 
     /**
      * @brief Get the Date object
      *
      * @return string
      */
-    string getDate() { return this->dateStr; }
+    // string getDate() { return this->dateStr; }
 
     /**
      * @brief Get the Time object
      *
      * @return string
      */
-    string getTime() { return this->timeStr; }
+    // string getTime() { return this->timeStr; }
 
     /**
      * @brief Get the Fseat object
@@ -445,7 +479,7 @@ public:
      *
      * @param next
      */
-    void setNextNode(Flight *next) { this->next; }
+    void setNextNode(Flight *next) { this->next = next; }
 };
 
 /// @brief Class to creat a Flight linked list
@@ -567,17 +601,24 @@ public:
     int pop(void)
     {
         int flightN;
-        if (this->head != nullptr)
+        try
         {
-            flightN = this->head->getFlightNumber();
-            // Swap the Booking pointers
-            Flight *temp = this->head;
-            this->head = this->head->getNextNode();
-            delete temp;
+            if (this->head == nullptr)
+            {
+                throw "List is empty!";
+            }
+            else
+            {
+                flightN = this->head->getFlightNumber();
+                // Swap the Booking pointers
+                Flight *temp = this->head;
+                this->head = this->head->getNextNode();
+                delete temp;
+            }
         }
-        else
+        catch (const char *emptyList)
         {
-            throw std::range_error("List is empty!");
+            std::cout << emptyList << std::endl;
         }
         return flightN;
     } // end pop()
@@ -595,6 +636,7 @@ public:
         {
             count++;
         }
+
         return count;
     }
     /**
@@ -614,7 +656,6 @@ public:
         }
         return false;
     }
-
 }; // End of linkedlist class
 
 /**
@@ -633,9 +674,9 @@ public:
      */
     Ticket(Booking *bookings, Flight *flights)
     {
-        int num_tickets = 0;
+        int num_tickets = 0, num_flights = 0;
         fprintf(stdout, "Writing tickets: ");
-
+        // Code to find flights with booking and print tickets
         for (Booking *blnp = bookings; blnp != nullptr;
              blnp = blnp->getNextNode())
         {
@@ -658,9 +699,41 @@ public:
                 }
             }
         }
-        //  return (num_tickets);
-    }
+        // Cancel this flight without any bookings and print in cancelled-flihgts.txt
 
+        for (Flight *flnp = flights; flnp != nullptr;
+             flnp = flnp->getNextNode())
+        {
+            bool isFound = false; // flag to check if the booking is found for this flight
+            for (Booking *blnp = bookings; blnp != nullptr;
+                 blnp = blnp->getNextNode())
+            {
+                /* find the flight for this booking */
+                if (!(flnp->getDate().compare(blnp->getDate())) &&
+                    !(flnp->getTime().compare(blnp->getTime())) &&
+                    !(flnp->getDeparture().compare(blnp->getDeparture())) &&
+                    !(flnp->getDestination().compare(blnp->getDestination())))
+                {
+                    isFound = true;
+                    // cout << flnp->getFlightNumber() << " Booking not found";
+                }
+                /*  else
+                  {
+                      std::cout << "Cancelling flight number: " << flnp->getFlightNumber() << std::endl;
+                      cancel_flight(flnp);
+                      num_flights++;
+                  }*/
+            }
+            if (!isFound)
+            {
+                std::cout << "Cancelling flight number: " << flnp->getFlightNumber() << std::endl;
+                cancel_flight(flnp);
+                num_flights++;
+            }
+            // else
+            //   isFound = false; // Reset the flag
+        }
+    }
     /**
      * @brief Allocate a seat
      *
@@ -681,6 +754,13 @@ public:
      * @param row
      */
     void print_ticket(Booking *blnp, Flight *flnp, int seat, int row);
+
+    /**
+     * @brief Function to cancel flights without any bookings
+     *
+     * @param flnp Flight class pointer
+     */
+    void cancel_flight(Flight *flnp);
 
 }; // End Class Ticket
 
@@ -748,15 +828,35 @@ int Ticket::allocate_seat(Flight *flight, Booking *booking, int *row,
     *seat = sn;
     return (1);
 }
-
 /**
- * @brief  Implementation of Print tickets function
+ * @brief Function to print cancelled fligths into a cancelled-flihgts.txt
+ *
+ * @param flnp Flight class pointer
+ */
+void Ticket::cancel_flight(Flight *flnp)
+{
+
+    std::ofstream flight_report(CANCELLED_FLIGHTS, ios::app); // create txt file in append mode
+
+    if (flight_report.is_open())
+    {
+        flight_report << flnp->getFlightNumber() << " has been cancelled due to non-booking" << std::endl;
+    }
+    else
+    {
+        cout << "Error... cancelled-flihgts.txt can not be created/opened!" << endl;
+    }
+}
+/*
+ * @brief Function to print tickets into txt files
+ *
  *
  * @param blnp
  * @param flnp
  * @param seat
  * @param row
  */
+
 void Ticket::print_ticket(Booking *blnp, Flight *flnp, int seat, int row)
 {
     char file_name[255];
@@ -769,10 +869,10 @@ void Ticket::print_ticket(Booking *blnp, Flight *flnp, int seat, int row)
     {
         ticket_file << "BOOKING: " << blnp->getBookingNumber() << endl;
         ticket_file << "FLIGHT: " << flnp->getFlightNumber()
-                    << "DEPARTURE: " << flnp->getDeparture()
+                    << " DEPARTURE: " << flnp->getDeparture()
                     << " DESTINATION:" << flnp->getDestination() << flnp->getDate()
                     << flnp->getTime() << endl;
-        ticket_file << "PASSENGER " << blnp->getFirstName() << blnp->getLastName()
+        ticket_file << "PASSENGER: " << blnp->getFirstName() << blnp->getLastName()
                     << endl;
         ticket_file << "CLASS: " << blnp->getSeatClass() << endl;
         ticket_file << "ROW " << row << " SEAT " << seat << endl;
@@ -791,14 +891,25 @@ void Ticket::print_ticket(Booking *blnp, Flight *flnp, int seat, int row)
 
 int main(int argc, char **argv)
 {
+    try
+    {
+        if (argc != 3)
+        {
+            throw "Please provide both data files (flights.csv & bookings.csv)\n";
+        }
+    }
+    catch (const char *what)
+    { // catch all char * exceptions
+        cerr << "Error: " << what << endl;
+        return (-1);
+    }
     FlightManager flights{argv[1]};
     BookingManager bookings{argv[2]};
 
     Ticket ticket(bookings.getBookings(), flights.getFlights());
 
-    std::cout << "Total flights: " << flights.length()
+    std::cout << "Total number of flights: " << flights.length()
               << std::endl;
-    std::cout << "Total bookings: " << bookings.length() << endl;
-
+    std::cout << "Total number of bookings: " << bookings.length() << endl;
     return 0;
 } // End main()
